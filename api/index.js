@@ -29,8 +29,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/form', formRoutes);
 
 // Health check route
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'Server is running' });
+app.get('', (req, res) => {
+  res.status(200).json({ status: 'Backend API is live!' });
 });
 
 // Error handling middleware
