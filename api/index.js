@@ -13,9 +13,18 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://accurate-security.vercel.app/login','https://accurate-backend-production.up.railway.app/'],
-  credentials: true
+  origin: [
+    'http://localhost:3000',
+    'https://accurate-security.vercel.app',
+    'https://accurate-backend-production.up.railway.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -29,7 +38,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/form', formRoutes);
 
 // Health check route
-app.get('', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({ status: 'Backend API is live!' });
 });
 
