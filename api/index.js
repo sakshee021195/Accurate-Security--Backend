@@ -11,7 +11,20 @@ const formRoutes = require('../routes/form');
 // Initialize Express app
 const app = express();
 
-app.use(cors({
+// app.use(cors({
+//   origin: [
+//     'http://localhost:3000',
+//     'https://accurate-security.vercel.app',
+//     'https://accurate-backend-production.up.railway.app'
+//   ],
+//   credentials: true,
+//   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+//   allowedHeaders: ['Content-Type','Authorization']
+// }));
+
+const cors = require('cors');
+
+const corsOptions = {
   origin: [
     'http://localhost:3000',
     'https://accurate-security.vercel.app',
@@ -20,7 +33,7 @@ app.use(cors({
   credentials: true,
   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization']
-}));
+};
 
 app.options('*', cors());
 app.use(cors(corsOptions));
