@@ -22,7 +22,8 @@ app.use(cors({
   allowedHeaders: ['Content-Type','Authorization']
 }));
 
-// app.options('*', cors());
+app.options('*', cors());
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(express.json());
