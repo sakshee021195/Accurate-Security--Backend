@@ -29,10 +29,17 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://saksheejambucha:Hariom123@cluster0.cga5z.mongodb.net/AccuteSecurity?retryWrites=true&w=majority' || 'mongodb://localhost:27017/user-form-app')
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// mongoose.connect('mongodb+srv://saksheejambucha:Hariom123@cluster0.cga5z.mongodb.net/AccuteSecurity?retryWrites=true&w=majority' || 'mongodb://localhost:27017/user-form-app')
+//   .then(() => console.log('MongoDB connected successfully'))
+//   .catch(err => console.error('MongoDB connection error:', err));
 
+  const mongoURI = process.env.MONGODB_URI;
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/form', formRoutes);
