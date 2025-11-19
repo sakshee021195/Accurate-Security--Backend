@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 
 const authRoutes = require('../routes/auth');
 const formRoutes = require('../routes/form');
@@ -10,18 +9,15 @@ const formRoutes = require('../routes/form');
 const app = express();
 
 // CORS
-const corsOptions = {
+app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://accurate-security.vercel.app'
   ],
   credentials: true
-};
-app.use(cors(corsOptions));
-app.options('*', cors());
+}));
 
-// Middleware
-app.use(bodyParser.json());
+// JSON middleware
 app.use(express.json());
 
 // MongoDB
