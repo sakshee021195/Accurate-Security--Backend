@@ -22,7 +22,6 @@ const app = express();
 //   allowedHeaders: ['Content-Type','Authorization']
 // }));
 
-const cors = require('cors');
 
 const corsOptions = {
   origin: [
