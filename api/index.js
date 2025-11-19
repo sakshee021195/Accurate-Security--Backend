@@ -11,7 +11,6 @@ const formRoutes = require('../routes/form');
 // Initialize Express app
 const app = express();
 
-// Middleware
 app.use(cors({
   origin: [
     'http://localhost:3000',
@@ -19,11 +18,11 @@ app.use(cors({
     'https://accurate-backend-production.up.railway.app'
   ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
 }));
 
-app.options('*', cors());
+// app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(express.json());
