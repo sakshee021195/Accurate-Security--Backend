@@ -8,16 +8,30 @@ const formRoutes = require('../routes/form');
 
 const app = express();
 
-// CORS
-app.use(cors({
-  origin: [
-    'http://localhost:3000','http://localhost:5173',
-    'https://accurate-security.vercel.app'
-  ],
+// Enhanced CORS Configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'https://accurate-security.vercel.app'
+    ];
+    
+    // Allow requests with no origin (like mobile apps, Postman, or server-to-server)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  maxAge: 600 // Cache preflight for 10 minutes
+};
+
+app.use(cors(corsOptions));
 
 // JSON middleware
 app.use(express.json());
