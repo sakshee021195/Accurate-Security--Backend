@@ -3,12 +3,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const authRoutes = require('../routes/auth');
-const formRoutes = require('../routes/form');
-
 const app = express();
 
-// Enhanced CORS Configuration
+// CORS
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
@@ -17,7 +14,6 @@ const corsOptions = {
       'https://accurate-security.vercel.app'
     ];
     
-    // Allow requests with no origin (like mobile apps, Postman, or server-to-server)
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -28,12 +24,10 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
-  maxAge: 600 // Cache preflight for 10 minutes
+  maxAge: 600
 };
 
 app.use(cors(corsOptions));
-
-// JSON middleware
 app.use(express.json());
 
 // MongoDB
@@ -44,9 +38,22 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('MongoDB connected successfully'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/form', formRoutes);
+// DEBUG: Log when loading routes
+console.log('Loading routes...');
+
+try {
+  const authRoutes = require('../routes/auth');
+  const formRoutes = require('../routes/form');
+  
+  console.log('Routes loaded successfully');
+  
+  app.use('/api/auth', authRoutes);
+  app.use('/api/form', formRoutes);
+  
+  console.log('Routes registered successfully');
+} catch (error) {
+  console.error('Error loading routes:', error);
+}
 
 // Health check
 app.get('/', (req, res) => res.json({ status: 'Backend API is live!' }));
@@ -59,4 +66,12 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log('Available routes:');
+  console.log('- GET  /');
+  console.log('- POST /api/auth/register');
+  console.log('- POST /api/auth/login');
+  console.log('- POST /api/form/submit');
+  console.log('- GET  /api/form/all');
+});
