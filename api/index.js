@@ -11,10 +11,12 @@ const app = express();
 // CORS
 app.use(cors({
   origin: [
-    'http://localhost:3000',
+    'http://localhost:3000','http://localhost:5173',
     'https://accurate-security.vercel.app'
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // JSON middleware
