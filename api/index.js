@@ -1,3 +1,5 @@
+console.log("SERVER STARTED FROM:", __dirname);
+
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -44,8 +46,8 @@ console.log('Loading routes...');
 try {
   console.log(__dirname);
 
-  const authRoutes = require('./routes/auth');
-  const formRoutes = require('./routes/form');
+  const authRoutes = require('../routes/auth');
+  const formRoutes = require('../routes/form');
   
   console.log('Routes loaded successfully');
   
