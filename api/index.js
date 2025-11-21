@@ -42,8 +42,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 console.log('Loading routes...');
 
 try {
-  const authRoutes = require('../routes/auth');
-  const formRoutes = require('../routes/form');
+  console.log(__dirname);
+
+  const authRoutes = require('./routes/auth');
+  const formRoutes = require('./routes/form');
   
   console.log('Routes loaded successfully');
   
